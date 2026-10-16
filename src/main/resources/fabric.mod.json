@@ -1,0 +1,20 @@
+{
+	"schemaVersion": 1,
+	"id": "chronicle",
+	"version": "${version}",
+	"name": "Chronicle",
+	"description": "Ein automatisches Abenteuer-Tagebuch: protokolliert Biome, Dimensionen, Tode, seltene Funde und Meilensteine – mit Kompass zurück zu jedem Eintrag. Wahlweise Vanilla- oder Modern-UI.",
+	"authors": ["Chronicle"],
+	"license": "MIT",
+	"icon": "assets/chronicle/icon.png",
+	"environment": "client",
+	"entrypoints": {
+		"client": ["net.chronicle.ChronicleClient"]
+	},
+	"depends": {
+		"fabricloader": ">=${loader}",
+		"minecraft": "${mc_range}",
+		"java": ">=${java}",
+		"fabric-api": "*"
+	}
+}

@@ -1,0 +1,86 @@
+plugins {
+	// Obfuskierte Versionen (bis 1.21.11) brauchen Remapping, ab 26.1 ist Minecraft unobfuskiert.
+	id 'net.fabricmc.fabric-loom' version "${loom_version}" apply false
+	id 'net.fabricmc.fabric-loom-remap' version "${loom_version}" apply false
+}
+
+subprojects {
+	def remap = project.property('remap').toBoolean()
+	apply plugin: remap ? 'net.fabricmc.fabric-loom-remap' : 'net.fabricmc.fabric-loom'
+
+	def mc = project.property('minecraft_version')
+	def javaVersion = project.property('java_version').toInteger()
+
+	version = "${rootProject.mod_version}+mc${mc}"
+	group = rootProject.maven_group
+
+	base {
+		archivesName = rootProject.archives_base_name
+	}
+
+	// Gemeinsamer Code liegt in src/main, versionsabhängiger Code in src/compat/<name>.
+	def compatDirs = project.property('compat').split(',').collect { it.trim() }
+	sourceSets {
+		main {
+			java.srcDirs = [rootProject.file('src/main/java')] + compatDirs.collect { rootProject.file("src/compat/$it/java") }
+			resources.srcDirs = [rootProject.file('src/main/resources')]
+		}
+	}
+
+	// Screenshot-Test im echten Client: ./gradlew :<version>:runClientGameTest
+	fabricApi {
+		configureTests {
+			createSourceSet = true
+			modId = 'chronicle-test'
+			enableGameTests = false
+			enableClientGameTests = true
+		}
+	}
+	sourceSets.named('gametest') {
+		java.srcDirs = [rootProject.file('src/gametest/java')]
+		resources.srcDirs = [rootProject.file('src/gametest/resources')]
+	}
+
+	dependencies {
+		minecraft "com.mojang:minecraft:${mc}"
+		if (remap) {
+			mappings loom.officialMojangMappings()
+			modImplementation "net.fabricmc:fabric-loader:${rootProject.loader_version}"
+			modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+		} else {
+			implementation "net.fabricmc:fabric-loader:${rootProject.loader_version}"
+			implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+		}
+	}
+
+	processResources {
+		def props = [
+			version : project.version,
+			mc_range: project.property('mc_range'),
+			java    : javaVersion,
+			loader  : rootProject.loader_version
+		]
+		inputs.properties props
+		filesMatching('fabric.mod.json') {
+			expand props
+		}
+	}
+
+	tasks.withType(JavaCompile).configureEach {
+		it.options.release = javaVersion
+		it.options.encoding = 'UTF-8'
+	}
+
+	java {
+		sourceCompatibility = JavaVersion.toVersion(javaVersion)
+		targetCompatibility = JavaVersion.toVersion(javaVersion)
+	}
+
+	// Fertige Jars zusätzlich nach build/libs im Hauptordner kopieren.
+	def releaseJar = remap ? tasks.named('remapJar') : tasks.named('jar')
+	tasks.register('collectJar', Copy) {
+		from releaseJar
+		into rootProject.layout.buildDirectory.dir('libs')
+	}
+	tasks.named('build') { finalizedBy 'collectJar' }
+}

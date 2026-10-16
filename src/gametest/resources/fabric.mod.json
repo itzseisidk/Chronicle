@@ -1,0 +1,10 @@
+{
+	"schemaVersion": 1,
+	"id": "chronicle-test",
+	"version": "1.0.0",
+	"name": "Chronicle Screenshot-Test",
+	"environment": "client",
+	"entrypoints": {
+		"fabric-client-gametest": ["net.chronicle.test.ChronicleScreenshotTest"]
+	}
+}

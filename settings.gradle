@@ -1,0 +1,21 @@
+pluginManagement {
+	repositories {
+		maven {
+			name = 'Fabric'
+			url = 'https://maven.fabricmc.net/'
+		}
+		mavenCentral()
+		gradlePluginPortal()
+	}
+}
+
+rootProject.name = 'chronicle'
+
+// Jede Minecraft-Version ist ein eigenes Subprojekt unter versions/<mc>.
+// Die Ordnernamen hier müssen zu versions/* passen.
+def mcVersions = ['1.21.8', '1.21.10', '1.21.11', '26.1.2', '26.2', '26.3']
+
+mcVersions.each { mc ->
+	include mc
+	project(":$mc").projectDir = file("versions/$mc")
+}
