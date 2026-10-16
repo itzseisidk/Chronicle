@@ -10,7 +10,6 @@ import net.chronicle.ui.modern.widget.MTextField;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 
-/** Notiz anlegen oder bearbeiten. */
 final class NoteModal extends MModal {
 	private final JournalEntry existing;
 	private String titleText;
@@ -54,14 +53,10 @@ final class NoteModal extends MModal {
 
 	@Override
 	protected void submit() {
-		if (titleText.isBlank() && bodyText.isBlank()) {
-			close();
-			return;
-		}
-		if (existing == null) {
-			Notes.create(titleText, bodyText);
-		} else {
-			Notes.update(existing, titleText, bodyText);
+		// komplett leer = einfach zumachen, keine leere notiz speichern
+		if (!titleText.isBlank() || !bodyText.isBlank()) {
+			if (existing == null) Notes.create(titleText, bodyText);
+			else Notes.update(existing, titleText, bodyText);
 		}
 		close();
 	}

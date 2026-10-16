@@ -3,7 +3,6 @@ package net.chronicle.journal;
 import java.util.Locale;
 import net.minecraft.network.chat.Component;
 
-/** Art eines Tagebuch-Eintrags. Farbe und Icon werden von beiden UIs genutzt. */
 public enum Category {
 	BIOME(0xFF4ADE80, "minecraft:grass_block"),
 	DIMENSION(0xFFA78BFA, "minecraft:obsidian"),

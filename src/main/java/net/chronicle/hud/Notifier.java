@@ -9,7 +9,6 @@ import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 
-/** Meldet neue Einträge: Vanilla über System-Toasts, Modern über eigene HUD-Karten. */
 public final class Notifier {
 	private static final SystemToast.SystemToastId TOAST = new SystemToast.SystemToastId(4000L);
 

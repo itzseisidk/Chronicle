@@ -19,7 +19,6 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 
-/** Die Vanilla-UI: nur Minecraft-eigene Komponenten (Button, EditBox, CycleButton, Auswahlliste). */
 public final class VanillaJournalScreen extends CScreen {
 	private final Screen parent;
 	private Filter filter = Filter.ALL;

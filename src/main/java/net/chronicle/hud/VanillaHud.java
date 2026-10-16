@@ -9,7 +9,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 
-/** Kompass im Vanilla-Stil: schlichter Text mit Schatten, wie die Actionbar. */
 final class VanillaHud {
 	private VanillaHud() {
 	}
@@ -25,12 +24,9 @@ final class VanillaHud {
 			line = Component.literal(nav.arrow() + " ").withStyle(ChatFormatting.YELLOW)
 					.append(Component.literal(title).withStyle(ChatFormatting.WHITE))
 					.append(Component.literal(" · " + EntryText.distance(nav.distance())).withStyle(ChatFormatting.GRAY));
-			if (Math.abs(nav.dy()) > 3) {
-				line.append(Component.literal((nav.dy() > 0 ? " ▲" : " ▼") + Math.abs(nav.dy())).withStyle(ChatFormatting.GRAY));
-			}
-			if (nav.converted()) {
-				line.append(Component.literal(" (×8)").withStyle(ChatFormatting.DARK_GRAY));
-			}
+			int dy = nav.dy();
+			if (Math.abs(dy) > 3) line.append(Component.literal((dy > 0 ? " ▲" : " ▼") + Math.abs(dy)).withStyle(ChatFormatting.GRAY));
+			if (nav.converted()) line.append(Component.literal(" (×8)").withStyle(ChatFormatting.DARK_GRAY));
 		}
 		g.centered(font, line, g.width() / 2, 4, 0xFFFFFFFF);
 	}

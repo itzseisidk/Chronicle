@@ -9,7 +9,6 @@ import net.chronicle.ui.modern.widget.MToggle;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 
-/** Einstellungen als Schalter. Änderungen werden sofort gespeichert. */
 final class SettingsModal extends MModal {
 	private int trackingY;
 
@@ -22,21 +21,24 @@ final class SettingsModal extends MModal {
 		ChronicleConfig cfg = ChronicleConfig.get();
 		int pad = 12;
 		int rowH = 18;
-		int y0 = y + 30;
+		int ty = y + 30;
 		add(new MToggle(Component.translatable("chronicle.settings.notifications"), null, cfg.notifications, v -> {
 			cfg.notifications = v;
 			ChronicleConfig.save();
-		}).bounds(x + pad, y0, w - pad * 2, rowH));
+		}).bounds(x + pad, ty, w - pad * 2, rowH));
+		ty += rowH + 2;
 		add(new MToggle(Component.translatable("chronicle.settings.compass"), null, cfg.compass, v -> {
 			cfg.compass = v;
 			ChronicleConfig.save();
-		}).bounds(x + pad, y0 + rowH + 2, w - pad * 2, rowH));
+		}).bounds(x + pad, ty, w - pad * 2, rowH));
+		ty += rowH + 2;
 		add(new MToggle(Component.translatable("chronicle.settings.sounds"), null, cfg.sounds, v -> {
 			cfg.sounds = v;
 			ChronicleConfig.save();
-		}).bounds(x + pad, y0 + (rowH + 2) * 2, w - pad * 2, rowH));
+		}).bounds(x + pad, ty, w - pad * 2, rowH));
+		ty += rowH + 2;
 
-		trackingY = y0 + (rowH + 2) * 3 + 8;
+		trackingY = ty + 8;
 		int colW = (w - pad * 2 - 6) / 2;
 		Category[] categories = Category.values();
 		for (int i = 0; i < categories.length; i++) {
@@ -54,8 +56,9 @@ final class SettingsModal extends MModal {
 	@Override
 	protected void drawContent(Gfx g, int mx, int my, float dt) {
 		var font = Minecraft.getInstance().font;
-		g.text(font, Component.translatable("chronicle.settings.tracking"), x + 12, trackingY + 2, Theme.TEXT_MUTED, false);
-		g.fill(x + 12 + font.width(Component.translatable("chronicle.settings.tracking")) + 6, trackingY + 6, x + w - 12, trackingY + 7, Theme.DIVIDER);
+		Component label = Component.translatable("chronicle.settings.tracking");
+		g.text(font, label, x + 12, trackingY + 2, Theme.TEXT_MUTED, false);
+		g.fill(x + 12 + font.width(label) + 6, trackingY + 6, x + w - 12, trackingY + 7, Theme.DIVIDER);
 	}
 
 	@Override

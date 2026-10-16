@@ -17,7 +17,7 @@ import net.minecraft.client.Minecraft;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/** Einstiegspunkt. Chronicle ist ein reiner Client-Mod – der Server bekommt davon nichts mit. */
+// reiner client mod, der server bekommt davon nix mit
 public final class ChronicleClient implements ClientModInitializer {
 	public static final String MOD_ID = "chronicle";
 	public static final Logger LOG = LoggerFactory.getLogger("Chronicle");

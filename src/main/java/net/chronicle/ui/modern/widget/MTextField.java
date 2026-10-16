@@ -4,7 +4,6 @@ import net.chronicle.compat.Gfx;
 import net.chronicle.ui.modern.Draw;
 import net.chronicle.ui.modern.Theme;
 
-/** Einzeiliges Eingabefeld mit Icon, Platzhalter, Markierung und Löschen-Knopf. */
 public class MTextField extends MTextBase {
 	private final String icon;
 	private int scroll;

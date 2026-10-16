@@ -1,6 +1,5 @@
 package net.chronicle.ui.modern;
 
-/** Exponentiell geglätteter Wert für flüssige, framerate-unabhängige Animationen. */
 public final class Anim {
 	private float value;
 	private float target;
@@ -35,7 +34,6 @@ public final class Anim {
 		return target;
 	}
 
-	/** Misst die Zeit zwischen zwei Frames in Sekunden (begrenzt, damit Ruckler nicht springen). */
 	public static final class Clock {
 		private long last = System.nanoTime();
 
@@ -43,7 +41,7 @@ public final class Anim {
 			long now = System.nanoTime();
 			float dt = (now - last) / 1_000_000_000f;
 			last = now;
-			return Math.min(dt, 0.1f);
+			return Math.min(dt, 0.1f); // nach laggern nicht springen
 		}
 	}
 }

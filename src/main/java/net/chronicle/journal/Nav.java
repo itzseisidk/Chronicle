@@ -4,12 +4,8 @@ import net.chronicle.compat.Platform;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.util.Mth;
 
-/**
- * Richtung und Entfernung vom Spieler zu einem Eintrag.
- * Zwischen Oberwelt und Nether wird automatisch mit Faktor 8 umgerechnet.
- *
- * @param relativeAngle Grad relativ zur Blickrichtung, 0 = geradeaus, positiv = rechts
- */
+// relativeAngle: 0 = geradeaus, positiv = rechts
+// converted = oberwelt/nether koords wurden mit 8 umgerechnet
 public record Nav(double distance, float relativeAngle, int dy, boolean converted) {
 	private static final String[] ARROWS = {"↑", "↗", "→", "↘", "↓", "↙", "←", "↖"};
 
@@ -43,7 +39,6 @@ public record Nav(double distance, float relativeAngle, int dy, boolean converte
 	}
 
 	public String arrow() {
-		int index = Math.floorMod(Math.round(relativeAngle / 45f), 8);
-		return ARROWS[index];
+		return ARROWS[Math.floorMod(Math.round(relativeAngle / 45f), 8)];
 	}
 }

@@ -28,10 +28,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
-/**
- * Die Modern-UI: ausschließlich eigene Komponenten (keine Vanilla-Buttons, -Listen oder -Textfelder).
- * Aufbau: Kopfzeile, Filter-Seitenleiste, Suchleiste und aufklappbare Karten.
- */
 public final class ModernJournalScreen extends CScreen implements MCardList.Actions {
 	private final Screen parent;
 	private final Anim.Clock clock = new Anim.Clock();
@@ -71,12 +67,13 @@ public final class ModernJournalScreen extends CScreen implements MCardList.Acti
 		sidebarW = pw >= 440 ? 124 : 28;
 		boolean compact = sidebarW < 100;
 
-		// Kopfzeile: Stil-Umschalter, Einstellungen, Schließen
+		// header, von rechts nach links
 		int hx = px + pw - 8;
 		MButton close = add(MButton.icon("✕", Component.translatable("gui.done"), this::onClose).bounds(hx - 18, py + 7, 18, 18));
 		MButton settings = add(MButton.icon("⚙", Component.translatable("chronicle.settings.title"), () -> openModal(new SettingsModal()))
 				.bounds(close.x - 22, py + 7, 18, 18));
 		int segW = 56;
+		// sind wir schon, macht nix
 		MButton modern = add(new MButton(Component.translatable("chronicle.style.modern"), null, MButton.Style.GHOST, () -> { }));
 		modern.bounds(settings.x - 8 - segW, py + 7, segW, 18);
 		modern.active = true;
@@ -86,7 +83,7 @@ public final class ModernJournalScreen extends CScreen implements MCardList.Acti
 		vanilla.tooltip = Component.translatable("chronicle.style.switch_tooltip");
 		segX = vanilla.x;
 
-		// Seitenleiste mit Filtern
+		// filter links
 		int sx = px + 8;
 		int sy = py + 36;
 		for (Filter f : Filter.values()) {
@@ -99,14 +96,12 @@ public final class ModernJournalScreen extends CScreen implements MCardList.Acti
 			chip.bounds(sx, sy, sidebarW, 18);
 			chips.add(chip);
 			widgets.add(chip);
-			sy += 20;
-			if (f == Filter.PINNED) sy += 6;
+			sy += f == Filter.PINNED ? 26 : 20; // luecke fuer den trennstrich
 		}
 
-		// Suchleiste + neue Notiz
 		int mx0 = px + 8 + sidebarW + 10;
 		int mw = px + pw - 8 - mx0;
-		int noteW = mw >= 260 ? 84 : 22;
+		int noteW = mw >= 260 ? 84 : 22; // bei wenig platz nur das plus
 		searchField = add(new MTextField("⌕").bounds(mx0, py + 36, mw - noteW - 6, 20));
 		searchField.placeholder(Component.translatable("chronicle.search_hint")).maxLength(64).onChange(s -> {
 			search = s;
@@ -156,8 +151,6 @@ public final class ModernJournalScreen extends CScreen implements MCardList.Acti
 	public void tick() {
 		if (seenRevision != JournalManager.revision()) refresh(false);
 	}
-
-	// ---------- Zeichnen ----------
 
 	@Override
 	protected void drawBackground(Gfx g, int mouseX, int mouseY, float partialTick) {
@@ -210,7 +203,7 @@ public final class ModernJournalScreen extends CScreen implements MCardList.Acti
 		Journal j = JournalManager.get();
 		g.text(font, title.copy().withStyle(ChatFormatting.BOLD), px + 36, py + 7, Theme.TEXT, false);
 		String world = j == null ? "" : j.worldName;
-		int maxW = px + pw - 8 - 18 - 22 - 8 - 112 - 8 - (px + 36);
+		int maxW = pw - 36 - 176; // platz bis zu den buttons rechts
 		String worldText = Draw.ellipsize(font, world, maxW);
 		g.text(font, worldText, px + 36, py + 18, Theme.TEXT_MUTED, false);
 		g.fill(px + 1, py + 30, px + pw - 1, py + 31, Theme.DIVIDER);
@@ -239,7 +232,7 @@ public final class ModernJournalScreen extends CScreen implements MCardList.Acti
 		g.text(font, Draw.ellipsize(font, text, sidebarW - 20), x + 12, y, Theme.TEXT_MUTED, false);
 	}
 
-	/** Aktuelles Ziel als kleine Pille in der Kopfzeile (nur wenn Platz ist). */
+	// aktuelles ziel oben im header, nur wenn genug platz ist
 	private void drawTargetPill(Gfx g, int left, int right) {
 		Journal j = JournalManager.get();
 		JournalEntry target = j == null ? null : j.target();
@@ -253,8 +246,6 @@ public final class ModernJournalScreen extends CScreen implements MCardList.Acti
 		Draw.round(g, x, py + 8, w, 16, 8, Draw.alpha(Theme.CYAN, 0.14f));
 		g.text(font, text, x + 8, py + 12, Theme.CYAN, false);
 	}
-
-	// ---------- Eingabe ----------
 
 	@Override
 	protected boolean onMouseDown(double mx, double my, int button, boolean doubleClick) {
@@ -330,8 +321,6 @@ public final class ModernJournalScreen extends CScreen implements MCardList.Acti
 	public void onClose() {
 		Platform.setScreen(parent);
 	}
-
-	// ---------- Karten-Aktionen ----------
 
 	@Override
 	public void target(JournalEntry entry) {

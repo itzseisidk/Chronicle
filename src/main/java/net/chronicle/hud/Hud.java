@@ -10,7 +10,6 @@ import net.chronicle.journal.Nav;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 
-/** HUD-Einstieg: Kompass zum Ziel und (Modern) die Benachrichtigungskarten. */
 public final class Hud {
 	private Hud() {
 	}
@@ -22,6 +21,7 @@ public final class Hud {
 		JournalEntry target = journal.target();
 		if (target == null) return;
 		Nav nav = Nav.of(target, mc.player);
+		// angekommen -> ziel weg. nicht wenn nur die umgerechneten nether koords passen
 		if (nav != null && !nav.converted() && nav.distance() < 3 && Math.abs(nav.dy()) < 4) {
 			JournalManager.setTarget(null);
 			Notifier.show(Component.translatable("chronicle.toast.reached"), target.title(), target);

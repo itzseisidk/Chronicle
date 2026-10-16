@@ -7,7 +7,6 @@ import net.chronicle.ui.modern.Draw;
 import net.chronicle.ui.modern.Theme;
 import net.minecraft.network.chat.Component;
 
-/** Beschriftung links, animierter Schalter rechts. */
 public class MToggle extends MWidget {
 	private final Component label;
 	private final Integer dotColor;

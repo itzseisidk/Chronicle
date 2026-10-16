@@ -14,7 +14,6 @@ import net.chronicle.ui.modern.Theme;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 
-/** HUD im Modern-Stil: einfahrende Benachrichtigungskarten und eine Kompass-Pille. */
 public final class ModernHud {
 	private static final long LIFETIME_MS = 4500;
 	private static final int CARD_W = 176;
@@ -51,20 +50,13 @@ public final class ModernHud {
 		while (TOASTS.size() > 4) TOASTS.remove(TOASTS.size() - 1);
 	}
 
-	public static void tick() {
-	}
-
 	static void hideCompass() {
 		COMPASS.snap(0);
 	}
 
-	/** Beide Teile teilen sich eine Uhr – der erste Aufruf pro Frame misst. */
-	private static float delta() {
-		return frameDelta;
-	}
-
+	// toasts() laeuft jeden frame und misst die zeit, compass() nutzt den wert mit
 	public static void toasts(Gfx g) {
-		frameDelta = CLOCK.tick();
+		float dt = frameDelta = CLOCK.tick();
 		var font = Minecraft.getInstance().font;
 		int right = g.width() - 6;
 		Iterator<Toast> it = TOASTS.iterator();
@@ -72,17 +64,16 @@ public final class ModernHud {
 		while (it.hasNext()) {
 			Toast t = it.next();
 			t.slide.set(t.expired() ? 0 : 1);
-			float s = t.slide.update(delta());
+			float s = t.slide.update(dt);
 			if (t.expired() && s < 0.02f) {
 				it.remove();
 				continue;
 			}
-			if (t.slot.get() < 0) t.slot.snap(index);
-			t.slot.set(index);
-			float slot = t.slot.update(delta());
-			index++;
+			if (t.slot.get() < 0) t.slot.snap(index); // neue karte nicht reinrutschen lassen
+			t.slot.set(index++);
+			float slot = t.slot.update(dt);
 
-			float ease = 1 - (1 - s) * (1 - s);
+			float ease = 1 - (1 - s) * (1 - s); // ease out
 			int x = Math.round(right - CARD_W + (1 - ease) * (CARD_W + 12));
 			int y = Math.round(6 + slot * (CARD_H + 5));
 			int accent = t.entry == null ? Theme.ACCENT : t.entry.category.color;
@@ -90,9 +81,7 @@ public final class ModernHud {
 			Draw.shadow(g, x, y, CARD_W, CARD_H, 7, 6, ease);
 			Draw.panel(g, x, y, CARD_W, CARD_H, 7, 0xF2141822, 0xFF2A3142);
 			Draw.circle(g, x + 17, y + CARD_H / 2f, 11, Draw.alpha(accent, 0.18f));
-			if (t.entry != null) {
-				g.item(ItemIcons.icon(t.entry), x + 9, y + CARD_H / 2 - 8);
-			}
+			if (t.entry != null) g.item(ItemIcons.icon(t.entry), x + 9, y + CARD_H / 2 - 8);
 			g.text(font, Draw.ellipsize(font, t.heading, CARD_W - 42), x + 34, y + 7, accent, false);
 			g.text(font, Draw.ellipsize(font, t.text, CARD_W - 42), x + 34, y + 19, Theme.TEXT, false);
 
@@ -107,7 +96,7 @@ public final class ModernHud {
 	public static void compass(Gfx g, JournalEntry target, Nav nav) {
 		var font = Minecraft.getInstance().font;
 		COMPASS.set(1);
-		float o = COMPASS.update(frameDelta == 0 ? 0.016f : frameDelta);
+		float o = COMPASS.update(frameDelta == 0 ? 0.016f : frameDelta); // erster frame: noch keine zeit gemessen
 
 		String title = Draw.ellipsize(font, target.title().getString(), 130);
 		String info;

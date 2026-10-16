@@ -3,17 +3,13 @@ package net.chronicle.compat;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
-/**
- * Eingabe-Brücke für die alten Maus/Tastatur-Signaturen (bis 1.21.8).
- * Die {@code on*}-Methoden sind versionsneutral; geben sie {@code true} zurück,
- * gilt das Ereignis als verbraucht und Vanilla bekommt es nicht mehr.
- */
+// on* liefert true = event verbraucht, vanilla kriegt es dann nicht mehr
 public abstract class InputScreen extends Screen {
-	/** Versionsneutrale Modifier-Bits für {@link #onKey}. */
 	public static final int SHIFT = 1;
 	public static final int CTRL = 2;
 	public static final int ALT = 4;
 
+	// vor 1.21.9 gibts kein doubleClick flag, also selber zaehlen
 	private static final long DOUBLE_CLICK_MS = 250;
 	private long lastClickTime;
 	private double lastClickX, lastClickY;

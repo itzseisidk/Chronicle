@@ -1,6 +1,5 @@
 package net.chronicle.ui.modern;
 
-/** Farbpalette der Modern-UI (ARGB). */
 public final class Theme {
 	public static final int BACKDROP_TOP = 0x8005070D;
 	public static final int BACKDROP_BOTTOM = 0xC005070D;

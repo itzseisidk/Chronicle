@@ -11,7 +11,6 @@ import net.chronicle.ui.modern.Theme;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 
-/** Dialog über der Modern-UI mit Einblend-Animation, Fokus-Verwaltung und Tastatursteuerung. */
 public abstract class MModal {
 	protected final Anim open = new Anim(0, 14);
 	protected final List<MWidget> widgets = new ArrayList<>();
@@ -36,10 +35,10 @@ public abstract class MModal {
 		build();
 	}
 
-	/** Widgets anlegen und positionieren ({@link #x}, {@link #y}, {@link #w}, {@link #h} sind gesetzt). */
+	// x/y/w/h sind hier schon gesetzt
 	protected abstract void build();
 
-	/** Enter (außerhalb eines mehrzeiligen Feldes). */
+	// enter
 	protected void submit() {
 	}
 
@@ -75,9 +74,7 @@ public abstract class MModal {
 		Draw.round(g, x + w - 22, y + 6, 16, 16, 4, overClose ? Theme.SURFACE_HOVER : 0);
 		g.text(MWidget.font(), "✕", x + w - 17, y + 10, overClose ? Theme.TEXT : Theme.TEXT_MUTED, false);
 		drawContent(g, mx, my, dt);
-		for (MWidget widget : widgets) {
-			widget.render(g, mx, my, dt);
-		}
+		for (MWidget widget : widgets) widget.render(g, mx, my, dt);
 		g.pop();
 	}
 
@@ -89,13 +86,12 @@ public abstract class MModal {
 	}
 
 	protected void focus(MWidget target) {
-		for (MWidget widget : widgets) {
-			widget.setFocused(widget == target);
-		}
+		for (MWidget widget : widgets) widget.setFocused(widget == target);
 	}
 
 	public boolean mouseDown(double mx, double my, int button) {
 		my -= offsetY;
+		// daneben geklickt -> zu
 		if (mx < x || mx >= x + w || my < y || my >= y + h) {
 			close();
 			return true;

@@ -7,13 +7,11 @@ import net.chronicle.ui.modern.Anim;
 import net.chronicle.ui.modern.Draw;
 import net.chronicle.ui.modern.Theme;
 
-/** Mehrzeiliges Textfeld mit Zeilenumbruch, Scrollen und Markierung. */
 public class MTextArea extends MTextBase {
 	private static final int PAD = 6;
 	private static final int LINE = 11;
 
-	/** Zeilen als {start, end} im Gesamttext (end exklusiv, ohne Zeilenumbruch). */
-	private final List<int[]> lines = new ArrayList<>();
+	private final List<int[]> lines = new ArrayList<>(); // {start, end} im text, end exklusiv
 	private int wrappedFor = -1;
 	private boolean dirty = true;
 	private final Anim scroll = new Anim(0, 20);

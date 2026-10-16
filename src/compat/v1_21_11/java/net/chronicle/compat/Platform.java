@@ -14,7 +14,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.Level;
 
-/** Kleine API-Unterschiede zwischen den Versionen (hier: 1.21.11). */
 public final class Platform {
 	private static final KeyMapping.Category KEY_CATEGORY = KeyMapping.Category.register(Identifier.fromNamespaceAndPath("chronicle", "main"));
 

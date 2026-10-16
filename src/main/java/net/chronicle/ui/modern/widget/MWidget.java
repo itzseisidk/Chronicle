@@ -9,7 +9,7 @@ import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 
-/** Basis aller Modern-Komponenten. Bewusst unabhängig von Vanillas Widget-System. */
+// eigene widgets statt vanilla AbstractWidget, die lassen sich kaum umstylen
 public abstract class MWidget {
 	public int x, y, w, h;
 	public boolean visible = true;

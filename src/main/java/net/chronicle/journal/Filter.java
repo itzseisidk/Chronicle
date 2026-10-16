@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Locale;
 import net.minecraft.network.chat.Component;
 
-/** Filter für die Eintragsliste – von beiden UIs genutzt. */
 public enum Filter {
 	ALL(null),
 	PINNED(null),
@@ -47,7 +46,6 @@ public enum Filter {
 		};
 	}
 
-	/** Gefilterte Einträge, neueste zuerst. */
 	public static List<JournalEntry> query(Journal journal, Filter filter, String search) {
 		List<JournalEntry> result = new ArrayList<>();
 		if (journal == null) return result;

@@ -4,7 +4,6 @@ import net.chronicle.compat.Platform;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 
-/** Notizen anlegen/ändern – gleiche Logik für beide UIs. */
 public final class Notes {
 	private Notes() {
 	}

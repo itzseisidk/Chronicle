@@ -4,7 +4,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.ObjectSelectionList;
 
-/** Vanilla-Auswahlliste mit versionsneutralen Zeilen (1.21.8). */
 public abstract class CList<R extends CList.Row<R>> extends ObjectSelectionList<R> {
 	private int rowWidth = 220;
 
@@ -33,7 +32,7 @@ public abstract class CList<R extends CList.Row<R>> extends ObjectSelectionList<
 		private static final long DOUBLE_CLICK_MS = 250;
 		private long lastClick;
 
-		/** Zeichnet den Inhalt der Zeile (ohne Auswahlrahmen, den macht Vanilla). */
+		// nur der inhalt, den auswahlrahmen macht vanilla
 		protected abstract void draw(Gfx g, int x, int y, int width, int height, int mouseX, int mouseY, boolean hovered);
 
 		protected boolean clicked(double mouseX, double mouseY, int button, boolean doubleClick) {

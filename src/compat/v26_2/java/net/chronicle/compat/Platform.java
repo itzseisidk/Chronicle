@@ -14,7 +14,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.Level;
 
-/** Kleine API-Unterschiede zwischen den Versionen (hier: ab 26.2). */
 public final class Platform {
 	private static final KeyMapping.Category KEY_CATEGORY = KeyMapping.Category.register(Identifier.fromNamespaceAndPath("chronicle", "main"));
 
@@ -37,6 +36,7 @@ public final class Platform {
 		return Minecraft.getInstance().gui.screen();
 	}
 
+	// ab 26.2 haengt screen/overlay/toasts an mc.gui
 	public static void setScreen(Screen screen) {
 		Minecraft.getInstance().gui.setScreen(screen);
 	}

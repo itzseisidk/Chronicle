@@ -6,11 +6,6 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.FormattedCharSequence;
 
-/**
- * Formen für die Modern-UI. Abgerundete Ecken werden in echten Bildschirmpixeln
- * (nicht in GUI-Pixeln) gezeichnet und an den Kanten geglättet – dadurch wirken
- * sie auch bei GUI-Skalierung 3 oder 4 sauber.
- */
 public final class Draw {
 	private Draw() {
 	}
@@ -19,6 +14,8 @@ public final class Draw {
 		return Math.max(1, Minecraft.getInstance().getWindow().getGuiScale());
 	}
 
+	// zeichnet in echten pixeln statt gui pixeln, sonst sind die ecken bei gui scale 3-4 voll treppig.
+	// die kante bekommt pro zeile einen halbtransparenten pixel als billiges antialiasing
 	public static void round(Gfx g, float x, float y, float w, float h, float radius, int color) {
 		if (w <= 0 || h <= 0 || (color >>> 24) == 0) return;
 		float s = guiScale();
@@ -58,13 +55,12 @@ public final class Draw {
 		g.pop();
 	}
 
-	/** Abgerundete Fläche mit 1px-Rand. Die Füllung sollte (fast) deckend sein. */
 	public static void panel(Gfx g, float x, float y, float w, float h, float radius, int fill, int border) {
 		round(g, x, y, w, h, radius, border);
 		round(g, x + 1, y + 1, w - 2, h - 2, Math.max(0, radius - 1), fill);
 	}
 
-	/** Weicher Schatten aus mehreren transparenten Lagen. */
+	// fake blur: ein paar transparente lagen uebereinander
 	public static void shadow(Gfx g, float x, float y, float w, float h, float radius, int size, float strength) {
 		for (int i = size; i >= 1; i--) {
 			float t = 1f - (float) i / (size + 1);
@@ -77,7 +73,7 @@ public final class Draw {
 		round(g, cx - radius, cy - radius, radius * 2, radius * 2, radius, color);
 	}
 
-	/** Pfeil (zeigt bei Winkel 0 nach oben), z. B. für den Kompass. */
+	// zeigt bei 0 nach oben
 	public static void arrow(Gfx g, float cx, float cy, float size, float radians, int color) {
 		float s = guiScale();
 		g.push();
@@ -87,7 +83,7 @@ public final class Draw {
 		int len = Math.round(size * s);
 		int half = len / 2;
 		int head = Math.round(len * 0.55f);
-		// Spitze: Zeilen werden nach oben schmaler
+		// spitze, wird nach oben schmaler
 		for (int row = 0; row < head; row++) {
 			int width = Math.max(1, Math.round((float) (row + 1) / head * len * 0.5f));
 			g.fill(-width, -half + row, width, -half + row + 1, color);
@@ -113,9 +109,7 @@ public final class Draw {
 
 	public static String ellipsize(Font font, String text, int maxWidth) {
 		if (font.width(text) <= maxWidth) return text;
-		String dots = "…";
-		int room = Math.max(0, maxWidth - font.width(dots));
-		return font.plainSubstrByWidth(text, room) + dots;
+		return font.plainSubstrByWidth(text, Math.max(0, maxWidth - font.width("…"))) + "…";
 	}
 
 	public static FormattedCharSequence ellipsize(Font font, Component text, int maxWidth) {

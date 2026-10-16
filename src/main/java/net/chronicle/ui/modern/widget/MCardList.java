@@ -16,7 +16,6 @@ import net.chronicle.ui.modern.Theme;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.FormattedCharSequence;
 
-/** Scrollbare Karten-Liste. Ein Klick klappt eine Karte auf und zeigt Details und Aktionen. */
 public class MCardList extends MWidget {
 	public interface Actions {
 		void target(JournalEntry entry);
@@ -226,9 +225,9 @@ public class MCardList extends MWidget {
 	}
 
 	private void layoutButtons(Card c, int bx, int by, int avail) {
-		int total = 0;
+		int total = -4;
 		for (MButton b : c.buttons) total += buttonWidth(b, false) + 4;
-		c.iconOnly = total - 4 > avail;
+		c.iconOnly = total > avail; // passt nicht -> nur icons mit tooltip
 		for (MButton b : c.buttons) {
 			int bw = buttonWidth(b, c.iconOnly);
 			b.tooltip = c.iconOnly ? b.label : null;
@@ -242,7 +241,7 @@ public class MCardList extends MWidget {
 		return font().width(b.icon) + 4 + font().width(b.label) + 14;
 	}
 
-	/** Liefert den Button unter der Maus (für Tooltips im Kompaktmodus). */
+	// fuer die tooltips wenn die buttons nur icons sind
 	public MButton hoveredButton(double mx, double my) {
 		if (!contains(mx, my)) return null;
 		for (Card c : cards) {

@@ -6,7 +6,6 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
-/** Item-IDs (als String) ↔ Items, ohne vom ID-Typ der jeweiligen Version abzuhängen. */
 public final class ItemIcons {
 	private static Map<String, Item> byId;
 	private static final Map<String, ItemStack> STACKS = new HashMap<>();
@@ -31,7 +30,6 @@ public final class ItemIcons {
 		});
 	}
 
-	/** Icon des Eintrags, mit Kategorie-Icon als Ersatz falls das Item (z. B. aus einem entfernten Mod) fehlt. */
 	public static ItemStack icon(JournalEntry entry) {
 		ItemStack stack = stack(entry.iconId());
 		return stack.isEmpty() ? stack(entry.category.icon) : stack;

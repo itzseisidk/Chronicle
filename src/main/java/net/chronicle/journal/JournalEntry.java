@@ -3,22 +3,15 @@ package net.chronicle.journal;
 import java.util.UUID;
 import net.minecraft.network.chat.Component;
 
-/**
- * Ein einzelner Eintrag. Wird 1:1 per Gson gespeichert, daher nur einfache Felder.
- *
- * <p>Der Titel ist {@code chronicle.entry.<type>} mit {@link #subject} als Argument,
- * außer bei Notizen: dort ist {@link #subject} der vom Spieler geschriebene Titel.
- */
 public final class JournalEntry {
 	public String id = UUID.randomUUID().toString();
 	public Category category = Category.NOTE;
 	public String type = "note";
+	// bei notizen ist subject der titel, sonst das argument fuer chronicle.entry.<type>
 	public String subject = "";
-	/** {@code true} wenn {@link #subject} ein Übersetzungsschlüssel ist. */
 	public boolean subjectKey;
 	public String subjectFallback = "";
 	public String text = "";
-	/** Item-ID für das Icon, leer = Icon der Kategorie. */
 	public String icon = "";
 	public long time = System.currentTimeMillis();
 	public String dimension = "minecraft:overworld";

@@ -14,13 +14,12 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 
-/** Erkennt rein clientseitig, was im Spiel passiert, und schreibt daraus Einträge. */
 public final class EventTracker {
 	public static final String OVERWORLD = "minecraft:overworld";
 	public static final String NETHER = "minecraft:the_nether";
 	public static final String END = "minecraft:the_end";
 
-	/** Items, die auch mit Seltenheit "common" einen Eintrag wert sind. */
+	// zaehlen auch wenn sie "common" sind
 	private static final Set<String> NOTABLE_ITEMS = Set.of(
 			"minecraft:iron_ingot", "minecraft:gold_ingot", "minecraft:diamond", "minecraft:emerald",
 			"minecraft:ancient_debris", "minecraft:netherite_scrap", "minecraft:netherite_ingot",
@@ -30,7 +29,7 @@ public final class EventTracker {
 	private static final int[] LEVELS = {10, 20, 30, 50, 100};
 	private static final int[] DISTANCES = {1000, 5000, 10000, 25000};
 
-	/** Schlüsselwort im Biom-Namen → Icon. Reihenfolge zählt (spezifische zuerst). */
+	// reihenfolge wichtig: "dark_forest" muss vor "forest" kommen usw.
 	private static final Map<String, String> BIOME_ICONS = new LinkedHashMap<>();
 
 	static {
@@ -126,7 +125,7 @@ public final class EventTracker {
 		}
 	}
 
-	/** Erster Besuch: alles, was der Spieler schon hat/kann, wird ohne Einträge übernommen. */
+	// erster tick in einer welt: alles was man schon hat wird still uebernommen, ohne eintraege
 	private static void baseline(Journal journal, LocalPlayer player, ClientLevel level, String dimension) {
 		journal.started = true;
 		journal.startX = player.getBlockX();
@@ -141,11 +140,13 @@ public final class EventTracker {
 		for (int lvl : LEVELS) {
 			if (player.experienceLevel >= lvl) journal.milestones.add("level_" + lvl);
 		}
-		// Wer schon tief unten (z. B. Superflat) oder hoch oben startet, bekommt dafür keinen Meilenstein.
+		// sonst kriegt man in superflat direkt "unter y=0" geschenkt
 		int y = player.getBlockY();
-		if (OVERWORLD.equals(dimension) && y < 0) journal.milestones.add("depth_0");
-		if (OVERWORLD.equals(dimension) && y <= -58) journal.milestones.add("bedrock");
-		if (OVERWORLD.equals(dimension) && y >= 256) journal.milestones.add("sky");
+		if (OVERWORLD.equals(dimension)) {
+			if (y < 0) journal.milestones.add("depth_0");
+			if (y <= -58) journal.milestones.add("bedrock");
+			if (y >= 256) journal.milestones.add("sky");
+		}
 		if (NETHER.equals(dimension) && y >= 128) journal.milestones.add("nether_roof");
 		JournalEntry start = JournalEntry.of(Category.MILESTONE, "start")
 				.subject(journal.worldName)
@@ -175,7 +176,8 @@ public final class EventTracker {
 		JournalManager.add(entry, true);
 	}
 
-	/** Todesnachrichten kommen als Systemnachricht – wir hängen sie an den passenden Eintrag. */
+	// die todesnachricht kommt mal vor, mal nach dem tick in dem man stirbt,
+	// deshalb wird sie in beide richtungen 5s lang zugeordnet
 	public static void onGameMessage(Component message) {
 		if (!(message.getContents() instanceof TranslatableContents contents) || !contents.getKey().startsWith("death.")) return;
 		LocalPlayer player = Minecraft.getInstance().player;

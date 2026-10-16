@@ -16,7 +16,6 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 
-/** Detailansicht eines Eintrags (Vanilla). */
 final class VanillaEntryScreen extends CScreen {
 	private final Screen parent;
 	private final JournalEntry entry;

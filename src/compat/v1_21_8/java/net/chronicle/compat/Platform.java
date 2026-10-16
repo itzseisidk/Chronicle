@@ -14,7 +14,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 
-/** Kleine API-Unterschiede zwischen den Versionen (hier: 1.21.8). */
 public final class Platform {
 	private static final String KEY_CATEGORY = "key.categories.chronicle";
 

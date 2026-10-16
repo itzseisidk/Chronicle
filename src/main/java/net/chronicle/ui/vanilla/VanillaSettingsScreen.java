@@ -12,7 +12,6 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 
-/** Einstellungen im klassischen Optionen-Layout: zwei Spalten mit Ein/Aus-Buttons. */
 final class VanillaSettingsScreen extends CScreen {
 	private final Screen parent;
 	private int trackingY;

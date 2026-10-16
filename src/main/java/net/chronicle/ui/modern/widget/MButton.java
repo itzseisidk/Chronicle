@@ -6,7 +6,6 @@ import net.chronicle.ui.modern.Draw;
 import net.chronicle.ui.modern.Theme;
 import net.minecraft.network.chat.Component;
 
-/** Abgerundeter Button mit optionalem Icon-Zeichen, Hover- und Klick-Animation. */
 public class MButton extends MWidget {
 	public enum Style { PRIMARY, SECONDARY, GHOST, DANGER }
 

@@ -7,7 +7,6 @@ import net.chronicle.ui.modern.Anim;
 import net.chronicle.ui.modern.Draw;
 import net.chronicle.ui.modern.Theme;
 
-/** Filter-Eintrag in der Seitenleiste (Farbpunkt, Name, Anzahl). Im Kompaktmodus nur der Punkt. */
 public class MChip extends MWidget {
 	public final Filter filter;
 	public boolean selected;

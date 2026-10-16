@@ -16,10 +16,6 @@ import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.client.server.IntegratedServer;
 import net.minecraft.world.level.storage.LevelResource;
 
-/**
- * Hält das Tagebuch der aktuellen Welt. Pro Einzelspielerwelt bzw. Serveradresse
- * gibt es eine eigene Datei unter {@code .minecraft/chronicle/}.
- */
 public final class JournalManager {
 	private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 	private static final long SAVE_DELAY_MS = 3000;
@@ -28,8 +24,7 @@ public final class JournalManager {
 	private static Path file;
 	private static boolean dirty;
 	private static long lastChange;
-	/** Wird bei jeder Änderung erhöht, damit offene Screens wissen, dass sie neu laden müssen. */
-	private static int revision;
+	private static int revision; // offene screens vergleichen das und laden neu
 
 	private JournalManager() {
 	}
@@ -111,9 +106,7 @@ public final class JournalManager {
 				}
 			}
 		}
-		if (loaded == null) {
-			loaded = new Journal();
-		}
+		if (loaded == null) loaded = new Journal();
 		loaded.repair();
 		loaded.worldName = id[1];
 		journal = loaded;
@@ -137,7 +130,7 @@ public final class JournalManager {
 		}
 	}
 
-	/** @return {Dateischlüssel, Anzeigename} */
+	// {dateiname, anzeigename}
 	private static String[] worldId(Minecraft mc) {
 		IntegratedServer server = mc.getSingleplayerServer();
 		if (server != null) {

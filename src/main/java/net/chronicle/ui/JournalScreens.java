@@ -8,7 +8,6 @@ import net.chronicle.ui.vanilla.VanillaJournalScreen;
 import net.chronicle.ui.vanilla.VanillaNoteScreen;
 import net.minecraft.client.gui.screens.Screen;
 
-/** Öffnet je nach eingestelltem Stil die Vanilla- oder die Modern-UI. */
 public final class JournalScreens {
 	private JournalScreens() {
 	}

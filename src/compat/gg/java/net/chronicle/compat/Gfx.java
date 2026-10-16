@@ -7,7 +7,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.item.ItemStack;
 
-/** Zeichen-Wrapper um {@link GuiGraphics} (1.21.6 – 1.21.11). */
 public final class Gfx {
 	private final GuiGraphics g;
 
@@ -83,7 +82,7 @@ public final class Gfx {
 		g.pose().rotate(radians);
 	}
 
-	/** Neue Ebene, damit später Gezeichnetes über Items und Text liegt. */
+	// alles danach liegt ueber items und text
 	public void layer() {
 		g.nextStratum();
 	}

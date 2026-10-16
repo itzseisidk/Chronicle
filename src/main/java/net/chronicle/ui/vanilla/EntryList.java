@@ -11,7 +11,6 @@ import net.chronicle.journal.JournalManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 
-/** Vanilla-Auswahlliste (wie die Weltauswahl): Icon, Titel, graue Infozeile. */
 final class EntryList extends CList<EntryList.EntryRow> {
 	private final Consumer<JournalEntry> onOpen;
 

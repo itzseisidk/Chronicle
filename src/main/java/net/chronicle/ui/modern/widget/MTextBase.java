@@ -6,7 +6,6 @@ import java.util.function.Consumer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 
-/** Gemeinsame Textbearbeitung (Cursor, Markierung, Zwischenablage) für Textfeld und Textbereich. */
 public abstract class MTextBase extends MWidget {
 	protected String value = "";
 	protected int cursor;
@@ -136,7 +135,6 @@ public abstract class MTextBase extends MWidget {
 		return value.length();
 	}
 
-	/** Hoch/Runter, nur im mehrzeiligen Feld relevant. */
 	protected boolean vertical(int direction, boolean select) {
 		return false;
 	}
@@ -218,7 +216,7 @@ public abstract class MTextBase extends MWidget {
 				}
 			}
 		}
-		// Normale Zeichen kommen über charTyped – Tasten trotzdem schlucken, damit z. B. "E" nicht das Inventar öffnet.
+		// text kommt ueber charTyped, aber die taste trotzdem schlucken sonst geht bei E das inventar auf
 		return key != InputConstants.KEY_ESCAPE && key != InputConstants.KEY_TAB;
 	}
 

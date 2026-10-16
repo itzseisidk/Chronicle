@@ -15,7 +15,6 @@ import net.chronicle.journal.Category;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.network.chat.Component;
 
-/** Einstellungen in {@code config/chronicle.json}. */
 public final class ChronicleConfig {
 	public enum UiStyle {
 		VANILLA, MODERN;

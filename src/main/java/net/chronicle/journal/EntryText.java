@@ -9,7 +9,6 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 
-/** Texte rund um Einträge, die beide UIs gleich anzeigen. */
 public final class EntryText {
 	private EntryText() {
 	}
@@ -22,7 +21,7 @@ public final class EntryText {
 		return Component.translatableWithFallback(dimensionKey(dimension), prettyId(dimension));
 	}
 
-	/** {@code minecraft:the_nether} → {@code The Nether} */
+	// minecraft:the_nether -> The Nether
 	public static String prettyId(String id) {
 		String path = id.substring(id.indexOf(':') + 1);
 		StringBuilder sb = new StringBuilder();
@@ -38,7 +37,6 @@ public final class EntryText {
 		return e.x + " / " + e.y + " / " + e.z;
 	}
 
-	/** Entsprechende Koordinaten in der Partnerdimension (Oberwelt ↔ Nether), sonst {@code null}. */
 	public static Component portalCoords(JournalEntry e) {
 		if (EventTracker.OVERWORLD.equals(e.dimension)) {
 			return Component.translatable("chronicle.detail.nether_coords", Math.floorDiv(e.x, 8), Math.floorDiv(e.z, 8));
@@ -69,11 +67,12 @@ public final class EntryText {
 	}
 
 	public static String date(long time) {
-		String pattern = Component.translatable("chronicle.date_format").getString();
+		var when = Instant.ofEpochMilli(time).atZone(ZoneId.systemDefault());
 		try {
-			return DateTimeFormatter.ofPattern(pattern, Locale.ROOT).format(Instant.ofEpochMilli(time).atZone(ZoneId.systemDefault()));
+			return DateTimeFormatter.ofPattern(Component.translatable("chronicle.date_format").getString(), Locale.ROOT).format(when);
 		} catch (IllegalArgumentException e) {
-			return DateTimeFormatter.ISO_LOCAL_DATE.format(Instant.ofEpochMilli(time).atZone(ZoneId.systemDefault()));
+			// kaputtes format in einer uebersetzung
+			return DateTimeFormatter.ISO_LOCAL_DATE.format(when);
 		}
 	}
 
@@ -82,24 +81,24 @@ public final class EntryText {
 		return Math.round(blocks) + " m";
 	}
 
-	/** Pfeil + Entfernung, oder "hier" wenn man praktisch daneben steht. */
 	public static String direction(Nav nav) {
 		if (nav.distance() < 3 && !nav.converted()) return Component.translatable("chronicle.here").getString();
 		return nav.arrow() + " " + distance(nav.distance());
 	}
 
-	/** "vor 5 Min. · Oberwelt · ↗ 120 m" */
+	private static Nav nav(JournalEntry e) {
+		LocalPlayer player = Minecraft.getInstance().player;
+		return player == null ? null : Nav.of(e, player);
+	}
+
+	// "vor 5 Min. · Oberwelt · ↗ 120 m"
 	public static Component subtitle(JournalEntry e) {
 		MutableComponent c = Component.empty().append(relativeTime(e.time)).append(" · ").append(dimension(e.dimension));
-		LocalPlayer player = Minecraft.getInstance().player;
-		Nav nav = player == null ? null : Nav.of(e, player);
-		if (nav != null) {
-			c.append(" · " + direction(nav));
-		}
+		Nav nav = nav(e);
+		if (nav != null) c.append(" · " + direction(nav));
 		return c;
 	}
 
-	/** Mehrzeiliger Detailtext für die Detailansicht. */
 	public static Component details(JournalEntry e) {
 		MutableComponent c = Component.empty();
 		c.append(Component.translatable("chronicle.detail.category", e.category.label())).append("\n");
@@ -108,14 +107,9 @@ public final class EntryText {
 		c.append(Component.translatable("chronicle.detail.position", coords(e)));
 		Component portal = portalCoords(e);
 		if (portal != null) c.append("\n").append(portal);
-		LocalPlayer player = Minecraft.getInstance().player;
-		Nav nav = player == null ? null : Nav.of(e, player);
-		if (nav != null) {
-			c.append("\n").append(Component.translatable("chronicle.detail.distance", direction(nav)));
-		}
-		if (!e.text.isBlank()) {
-			c.append("\n\n").append(Component.literal(e.text));
-		}
+		Nav nav = nav(e);
+		if (nav != null) c.append("\n").append(Component.translatable("chronicle.detail.distance", direction(nav)));
+		if (!e.text.isBlank()) c.append("\n\n").append(e.text);
 		return c;
 	}
 }

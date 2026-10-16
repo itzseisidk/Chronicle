@@ -8,7 +8,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.FormattedCharSequence;
 
-/** Sicherheitsabfrage, z. B. vor dem Löschen. */
 final class ConfirmModal extends MModal {
 	private final Component message;
 	private final Component confirmLabel;

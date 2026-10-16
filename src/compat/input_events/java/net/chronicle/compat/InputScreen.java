@@ -6,13 +6,8 @@ import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.network.chat.Component;
 
-/**
- * Eingabe-Brücke für die Event-Records (ab 1.21.9).
- * Die {@code on*}-Methoden sind versionsneutral; geben sie {@code true} zurück,
- * gilt das Ereignis als verbraucht und Vanilla bekommt es nicht mehr.
- */
+// on* liefert true = event verbraucht, vanilla kriegt es dann nicht mehr
 public abstract class InputScreen extends Screen {
-	/** Versionsneutrale Modifier-Bits für {@link #onKey}. */
 	public static final int SHIFT = 1;
 	public static final int CTRL = 2;
 	public static final int ALT = 4;
