@@ -227,7 +227,7 @@ public class MCardList extends MWidget {
 	private void layoutButtons(Card c, int bx, int by, int avail) {
 		int total = -4;
 		for (MButton b : c.buttons) total += buttonWidth(b, false) + 4;
-		c.iconOnly = total > avail; // passt nicht -> nur icons mit tooltip
+		c.iconOnly = total > avail; // doesn't fit -> icons only, with tooltips
 		for (MButton b : c.buttons) {
 			int bw = buttonWidth(b, c.iconOnly);
 			b.tooltip = c.iconOnly ? b.label : null;
@@ -241,7 +241,7 @@ public class MCardList extends MWidget {
 		return font().width(b.icon) + 4 + font().width(b.label) + 14;
 	}
 
-	// fuer die tooltips wenn die buttons nur icons sind
+	// for the tooltips when the buttons are icons only
 	public MButton hoveredButton(double mx, double my) {
 		if (!contains(mx, my)) return null;
 		for (Card c : cards) {

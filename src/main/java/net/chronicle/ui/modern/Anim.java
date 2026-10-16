@@ -41,7 +41,7 @@ public final class Anim {
 			long now = System.nanoTime();
 			float dt = (now - last) / 1_000_000_000f;
 			last = now;
-			return Math.min(dt, 0.1f); // nach laggern nicht springen
+			return Math.min(dt, 0.1f); // don't jump after a lag spike
 		}
 	}
 }

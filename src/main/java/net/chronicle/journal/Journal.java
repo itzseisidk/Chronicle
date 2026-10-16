@@ -18,7 +18,7 @@ public final class Journal {
 
 	public int deaths;
 	public String targetId;
-	public boolean started; // false bis zum ersten tick in der welt
+	public boolean started; // false until the first tick in the world
 	public int startX, startZ;
 
 	public JournalEntry find(String id) {
@@ -45,7 +45,7 @@ public final class Journal {
 		return (int) entries.stream().filter(e -> e.pinned).count();
 	}
 
-	// alte oder kaputte dateien haben manchmal null felder
+	// old or broken files sometimes have null fields
 	void repair() {
 		if (entries == null) entries = new ArrayList<>();
 		entries.removeIf(e -> e == null || e.category == null);

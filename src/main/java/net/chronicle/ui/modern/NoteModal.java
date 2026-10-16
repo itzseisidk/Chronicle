@@ -53,7 +53,7 @@ final class NoteModal extends MModal {
 
 	@Override
 	protected void submit() {
-		// komplett leer = einfach zumachen, keine leere notiz speichern
+		// completely empty = just close, don't save an empty note
 		if (!titleText.isBlank() || !bodyText.isBlank()) {
 			if (existing == null) Notes.create(titleText, bodyText);
 			else Notes.update(existing, titleText, bodyText);

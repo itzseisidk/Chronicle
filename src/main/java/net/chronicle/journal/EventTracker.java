@@ -19,7 +19,7 @@ public final class EventTracker {
 	public static final String NETHER = "minecraft:the_nether";
 	public static final String END = "minecraft:the_end";
 
-	// zaehlen auch wenn sie "common" sind
+	// these count even though they're "common"
 	private static final Set<String> NOTABLE_ITEMS = Set.of(
 			"minecraft:iron_ingot", "minecraft:gold_ingot", "minecraft:diamond", "minecraft:emerald",
 			"minecraft:ancient_debris", "minecraft:netherite_scrap", "minecraft:netherite_ingot",
@@ -29,7 +29,7 @@ public final class EventTracker {
 	private static final int[] LEVELS = {10, 20, 30, 50, 100};
 	private static final int[] DISTANCES = {1000, 5000, 10000, 25000};
 
-	// reihenfolge wichtig: "dark_forest" muss vor "forest" kommen usw.
+	// order matters: "dark_forest" has to come before "forest" etc.
 	private static final Map<String, String> BIOME_ICONS = new LinkedHashMap<>();
 
 	static {
@@ -125,7 +125,7 @@ public final class EventTracker {
 		}
 	}
 
-	// erster tick in einer welt: alles was man schon hat wird still uebernommen, ohne eintraege
+	// first tick in a world: take over everything the player already has, without entries
 	private static void baseline(Journal journal, LocalPlayer player, ClientLevel level, String dimension) {
 		journal.started = true;
 		journal.startX = player.getBlockX();
@@ -140,7 +140,7 @@ public final class EventTracker {
 		for (int lvl : LEVELS) {
 			if (player.experienceLevel >= lvl) journal.milestones.add("level_" + lvl);
 		}
-		// sonst kriegt man in superflat direkt "unter y=0" geschenkt
+		// otherwise superflat gives you "below y=0" for free
 		int y = player.getBlockY();
 		if (OVERWORLD.equals(dimension)) {
 			if (y < 0) journal.milestones.add("depth_0");
@@ -176,8 +176,8 @@ public final class EventTracker {
 		JournalManager.add(entry, true);
 	}
 
-	// die todesnachricht kommt mal vor, mal nach dem tick in dem man stirbt,
-	// deshalb wird sie in beide richtungen 5s lang zugeordnet
+	// the death message sometimes arrives before and sometimes after the tick you die in,
+	// so it gets matched in both directions for 5s
 	public static void onGameMessage(Component message) {
 		if (!(message.getContents() instanceof TranslatableContents contents) || !contents.getKey().startsWith("death.")) return;
 		LocalPlayer player = Minecraft.getInstance().player;

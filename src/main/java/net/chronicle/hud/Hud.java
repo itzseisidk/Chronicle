@@ -21,7 +21,7 @@ public final class Hud {
 		JournalEntry target = journal.target();
 		if (target == null) return;
 		Nav nav = Nav.of(target, mc.player);
-		// angekommen -> ziel weg. nicht wenn nur die umgerechneten nether koords passen
+		// arrived -> clear target. not when only the converted nether coords match
 		if (nav != null && !nav.converted() && nav.distance() < 3 && Math.abs(nav.dy()) < 4) {
 			JournalManager.setTarget(null);
 			Notifier.show(Component.translatable("chronicle.toast.reached"), target.title(), target);

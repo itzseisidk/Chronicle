@@ -67,13 +67,13 @@ public final class ModernJournalScreen extends CScreen implements MCardList.Acti
 		sidebarW = pw >= 440 ? 124 : 28;
 		boolean compact = sidebarW < 100;
 
-		// header, von rechts nach links
+		// header, right to left
 		int hx = px + pw - 8;
 		MButton close = add(MButton.icon("✕", Component.translatable("gui.done"), this::onClose).bounds(hx - 18, py + 7, 18, 18));
 		MButton settings = add(MButton.icon("⚙", Component.translatable("chronicle.settings.title"), () -> openModal(new SettingsModal()))
 				.bounds(close.x - 22, py + 7, 18, 18));
 		int segW = 56;
-		// sind wir schon, macht nix
+		// already here, does nothing
 		MButton modern = add(new MButton(Component.translatable("chronicle.style.modern"), null, MButton.Style.GHOST, () -> { }));
 		modern.bounds(settings.x - 8 - segW, py + 7, segW, 18);
 		modern.active = true;
@@ -83,7 +83,7 @@ public final class ModernJournalScreen extends CScreen implements MCardList.Acti
 		vanilla.tooltip = Component.translatable("chronicle.style.switch_tooltip");
 		segX = vanilla.x;
 
-		// filter links
+		// filters on the left
 		int sx = px + 8;
 		int sy = py + 36;
 		for (Filter f : Filter.values()) {
@@ -96,12 +96,12 @@ public final class ModernJournalScreen extends CScreen implements MCardList.Acti
 			chip.bounds(sx, sy, sidebarW, 18);
 			chips.add(chip);
 			widgets.add(chip);
-			sy += f == Filter.PINNED ? 26 : 20; // luecke fuer den trennstrich
+			sy += f == Filter.PINNED ? 26 : 20; // gap for the divider
 		}
 
 		int mx0 = px + 8 + sidebarW + 10;
 		int mw = px + pw - 8 - mx0;
-		int noteW = mw >= 260 ? 84 : 22; // bei wenig platz nur das plus
+		int noteW = mw >= 260 ? 84 : 22; // just the plus when there's not much room
 		searchField = add(new MTextField("⌕").bounds(mx0, py + 36, mw - noteW - 6, 20));
 		searchField.placeholder(Component.translatable("chronicle.search_hint")).maxLength(64).onChange(s -> {
 			search = s;
@@ -203,7 +203,7 @@ public final class ModernJournalScreen extends CScreen implements MCardList.Acti
 		Journal j = JournalManager.get();
 		g.text(font, title.copy().withStyle(ChatFormatting.BOLD), px + 36, py + 7, Theme.TEXT, false);
 		String world = j == null ? "" : j.worldName;
-		int maxW = pw - 36 - 176; // platz bis zu den buttons rechts
+		int maxW = pw - 36 - 176; // room up to the buttons on the right
 		String worldText = Draw.ellipsize(font, world, maxW);
 		g.text(font, worldText, px + 36, py + 18, Theme.TEXT_MUTED, false);
 		g.fill(px + 1, py + 30, px + pw - 1, py + 31, Theme.DIVIDER);
@@ -232,7 +232,7 @@ public final class ModernJournalScreen extends CScreen implements MCardList.Acti
 		g.text(font, Draw.ellipsize(font, text, sidebarW - 20), x + 12, y, Theme.TEXT_MUTED, false);
 	}
 
-	// aktuelles ziel oben im header, nur wenn genug platz ist
+	// current target in the header, only if there's enough room
 	private void drawTargetPill(Gfx g, int left, int right) {
 		Journal j = JournalManager.get();
 		JournalEntry target = j == null ? null : j.target();

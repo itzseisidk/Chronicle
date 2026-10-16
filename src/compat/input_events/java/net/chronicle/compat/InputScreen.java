@@ -6,7 +6,7 @@ import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.network.chat.Component;
 
-// on* liefert true = event verbraucht, vanilla kriegt es dann nicht mehr
+// on* returns true = event consumed, vanilla doesn't get it anymore
 public abstract class InputScreen extends Screen {
 	public static final int SHIFT = 1;
 	public static final int CTRL = 2;

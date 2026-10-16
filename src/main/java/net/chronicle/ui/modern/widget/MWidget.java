@@ -9,7 +9,7 @@ import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 
-// eigene widgets statt vanilla AbstractWidget, die lassen sich kaum umstylen
+// own widgets instead of vanilla AbstractWidget, those are hard to restyle
 public abstract class MWidget {
 	public int x, y, w, h;
 	public boolean visible = true;

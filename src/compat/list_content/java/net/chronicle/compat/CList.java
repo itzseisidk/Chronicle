@@ -30,7 +30,7 @@ public abstract class CList<R extends CList.Row<R>> extends ObjectSelectionList<
 	}
 
 	public abstract static class Row<R extends Row<R>> extends ObjectSelectionList.Entry<R> {
-		// nur der inhalt, den auswahlrahmen macht vanilla
+		// just the content, vanilla draws the selection box
 		protected abstract void draw(Gfx g, int x, int y, int width, int height, int mouseX, int mouseY, boolean hovered);
 
 		protected boolean clicked(double mouseX, double mouseY, int button, boolean doubleClick) {

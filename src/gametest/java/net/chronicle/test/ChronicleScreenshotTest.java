@@ -13,7 +13,7 @@ import net.fabricmc.fabric.api.client.gametest.v1.context.TestSingleplayerContex
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 
-// ./gradlew :<version>:runClientGameTest, bilder unter versions/<version>/build/run/clientGameTest/screenshots
+// ./gradlew :<version>:runClientGameTest, images go to versions/<version>/build/run/clientGameTest/screenshots
 public class ChronicleScreenshotTest implements FabricClientGameTest {
 	@Override
 	public void runTest(ClientGameTestContext ctx) {
@@ -87,7 +87,7 @@ public class ChronicleScreenshotTest implements FabricClientGameTest {
 			ctx.takeScreenshot("chronicle-vanilla-note");
 			ctx.setScreen(() -> null);
 
-			// gui scale 4 -> kompaktes layout
+			// gui scale 4 -> compact layout
 			ctx.runOnClient(mc -> {
 				mc.options.guiScale().set(4);
 				ChronicleConfig.get().style = ChronicleConfig.UiStyle.MODERN;
@@ -129,8 +129,8 @@ public class ChronicleScreenshotTest implements FabricClientGameTest {
 		JournalManager.add(entry, false);
 	}
 
-	// gleiche rechnung wie in ModernJournalScreen#init, damit man gezielt klicken kann.
-	// wenn sich das layout aendert muss das hier mit
+	// same math as ModernJournalScreen#init so we can click specific things.
+	// if the layout changes this has to change too
 	private static int[] panel(ClientGameTestContext ctx) {
 		int w = ctx.computeOnClient(mc -> mc.getWindow().getGuiScaledWidth());
 		int h = ctx.computeOnClient(mc -> mc.getWindow().getGuiScaledHeight());

@@ -1,5 +1,5 @@
 plugins {
-	// Obfuskierte Versionen (bis 1.21.11) brauchen Remapping, ab 26.1 ist Minecraft unobfuskiert.
+	// obfuscated versions (up to 1.21.11) need remapping, since 26.1 Minecraft isn't obfuscated
 	id 'net.fabricmc.fabric-loom' version "${loom_version}" apply false
 	id 'net.fabricmc.fabric-loom-remap' version "${loom_version}" apply false
 }
@@ -18,7 +18,7 @@ subprojects {
 		archivesName = rootProject.archives_base_name
 	}
 
-	// Gemeinsamer Code liegt in src/main, versionsabhängiger Code in src/compat/<name>.
+	// shared code is in src/main, version specific code in src/compat/<name>
 	def compatDirs = project.property('compat').split(',').collect { it.trim() }
 	sourceSets {
 		main {
@@ -27,7 +27,7 @@ subprojects {
 		}
 	}
 
-	// Screenshot-Test im echten Client: ./gradlew :<version>:runClientGameTest
+	// screenshot test in a real client: ./gradlew :<version>:runClientGameTest
 	fabricApi {
 		configureTests {
 			createSourceSet = true
@@ -76,7 +76,7 @@ subprojects {
 		targetCompatibility = JavaVersion.toVersion(javaVersion)
 	}
 
-	// Fertige Jars zusätzlich nach build/libs im Hauptordner kopieren.
+	// also copy the finished jars to build/libs in the root folder
 	def releaseJar = remap ? tasks.named('remapJar') : tasks.named('jar')
 	tasks.register('collectJar', Copy) {
 		from releaseJar

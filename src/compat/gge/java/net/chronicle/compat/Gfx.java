@@ -82,7 +82,7 @@ public final class Gfx {
 		g.pose().rotate(radians);
 	}
 
-	// alles danach liegt ueber items und text
+	// everything drawn after this goes on top of items and text
 	public void layer() {
 		g.nextStratum();
 	}

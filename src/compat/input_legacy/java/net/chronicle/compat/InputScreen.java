@@ -3,13 +3,13 @@ package net.chronicle.compat;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
-// on* liefert true = event verbraucht, vanilla kriegt es dann nicht mehr
+// on* returns true = event consumed, vanilla doesn't get it anymore
 public abstract class InputScreen extends Screen {
 	public static final int SHIFT = 1;
 	public static final int CTRL = 2;
 	public static final int ALT = 4;
 
-	// vor 1.21.9 gibts kein doubleClick flag, also selber zaehlen
+	// no doubleClick flag before 1.21.9, so count it ourselves
 	private static final long DOUBLE_CLICK_MS = 250;
 	private long lastClickTime;
 	private double lastClickX, lastClickY;

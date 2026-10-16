@@ -36,7 +36,7 @@ public final class Platform {
 		return Minecraft.getInstance().gui.screen();
 	}
 
-	// ab 26.2 haengt screen/overlay/toasts an mc.gui
+	// since 26.2 screen/overlay/toasts live on mc.gui
 	public static void setScreen(Screen screen) {
 		Minecraft.getInstance().gui.setScreen(screen);
 	}

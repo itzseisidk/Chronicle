@@ -1,79 +1,93 @@
-# Chronicle – das automatische Abenteuer-Tagebuch
+# Chronicle
 
-Ein **reiner Client-Mod** für Fabric (Minecraft **1.21.8 bis 26.3**). Chronicle schreibt im Hintergrund mit, was du erlebst, und bringt dich per Kompass zu jedem Eintrag zurück. Der Server braucht nichts, der Mod funktioniert auch auf Vanilla-, Paper- und Spigot-Servern.
+A **client-side** Fabric mod for Minecraft **1.21.8 to 26.3**. Chronicle keeps a journal of what happens while you play and can point you back to any entry with a compass. Nothing is needed on the server, so it also works on vanilla, Paper and Spigot servers.
 
-## Was wird erfasst?
+![Modern UI](screenshot-modern.png)
 
-| Kategorie | Wann |
+## What gets logged
+
+| Category | When |
 |---|---|
-| 🌿 Biome | erstes Betreten jedes Bioms (mit passendem Icon) |
-| 🌀 Dimensionen | erster Besuch in Nether, End oder Mod-Dimensionen |
-| 💀 Tode | Position, Todesnachricht, Level und Überlebenszeit |
-| 💎 Funde | erstes Mal seltene Items im Inventar (Diamant, Netherit, Elytra …) |
-| ⭐ Meilensteine | Level 10/20/30/50/100, unter Y=0, Grundgestein, über Y=256, 1k/5k/10k/25k Blöcke vom Start, Nether-Dach |
-| 📝 Notizen | eigene Notizen an deiner aktuellen Position |
+| Biomes | first time you enter each biome (with a fitting icon) |
+| Dimensions | first visit to the Nether, the End or a modded dimension |
+| Deaths | position, death message, level and how long you survived |
+| Finds | first time a rare item is in your inventory (diamond, netherite, elytra, ...) |
+| Milestones | level 10/20/30/50/100, below Y=0, bedrock, above Y=256, 1k/5k/10k/25k blocks from spawn, Nether roof |
+| Notes | your own notes at your current position |
 
-Außerdem:
-- **Kompass im HUD**: Setze einen Eintrag als *Ziel*. Oben im Bild erscheinen Richtung, Entfernung und Höhenunterschied. Zwischen Oberwelt und Nether wird automatisch ×8 umgerechnet. Am Ziel verschwindet der Kompass von selbst.
-- **Nether-Koordinaten** in den Details jedes Eintrags.
-- **Anpinnen, Suchen, Filtern** und Koordinaten kopieren.
-- Ein Tagebuch **pro Welt bzw. Server**, gespeichert in `.minecraft/chronicle/*.json`.
+Also:
+- **HUD compass**: set an entry as your *target* and the direction, distance and height difference show up at the top of the screen. Overworld and Nether coordinates are converted (×8) automatically. The compass goes away once you reach the target.
+- **Nether coordinates** in the details of every entry.
+- **Pin, search, filter** and copy coordinates.
+- One journal **per world or server**, saved in `.minecraft/chronicle/*.json`.
 
-Tasten: **J** öffnet die Chronik. „Schnellnotiz“ ist frei belegbar (Steuerung → Chronicle). In der Modern-UI gibt es außerdem **Strg+F** (Suche) und **Strg+N** (neue Notiz).
+Keys: **J** opens the journal. "Quick note" has no key by default (Controls → Chronicle). The Modern UI also has **Ctrl+F** (search) and **Ctrl+N** (new note).
 
-## Zwei Oberflächen
+## Two UIs
 
-Umschalten geht oben rechts in der Chronik oder in den Optionen.
+Switch in the top right of the journal or in the settings.
 
-- **Vanilla**: ausschließlich Minecraft-eigene Komponenten: `Button`, `EditBox`, `MultiLineEditBox`, `CycleButton`, `ObjectSelectionList`, `ConfirmScreen` und System-Toasts. Sieht aus wie ein Menü aus dem Spiel selbst.
-- **Modern**: ausschließlich eigene Komponenten (`ui/modern/widget`): abgerundete Panels mit geglätteten Ecken, aufklappbare Karten, animierte Schalter, Dialoge, Textfelder mit Markierung und Zwischenablage, eingleitende HUD-Benachrichtigungen und eine Kompass-Pille mit drehendem Pfeil.
+- **Vanilla**: only Minecraft's own components: `Button`, `EditBox`, `MultiLineEditBox`, `CycleButton`, `ObjectSelectionList`, `ConfirmScreen` and system toasts. Looks like a menu from the game itself.
+- **Modern**: only custom components (`ui/modern/widget`): rounded panels with smooth corners, expandable cards, animated toggles, dialogs, text fields with selection and clipboard, sliding HUD notifications and a compass pill with a rotating arrow.
 
-## Bauen
+![Vanilla UI](screenshot-vanilla.png)
 
-Voraussetzung: JDK 25 (baut auch die Java-21-Versionen).
+## Building
+
+Needs JDK 25 (it builds the Java 21 versions too).
 
 ```bash
 ./gradlew build
 ```
 
-Die fertigen Jars landen in `build/libs/`:
+The jars end up in `build/libs/`:
 
-| Jar | läuft auf |
+| Jar | Runs on |
 |---|---|
 | `chronicle-1.0.0+mc1.21.8.jar` | 1.21.8 |
-| `chronicle-1.0.0+mc1.21.10.jar` | 1.21.9 – 1.21.10 |
+| `chronicle-1.0.0+mc1.21.10.jar` | 1.21.9 - 1.21.10 |
 | `chronicle-1.0.0+mc1.21.11.jar` | 1.21.11 |
-| `chronicle-1.0.0+mc26.1.2.jar` | 26.1 – 26.1.2 |
+| `chronicle-1.0.0+mc26.1.2.jar` | 26.1 - 26.1.2 |
 | `chronicle-1.0.0+mc26.2.jar` | 26.2 |
 | `chronicle-1.0.0+mc26.3.jar` | 26.3 |
 
-Benötigt wird jeweils **Fabric Loader ≥ 0.19.5** und die passende **Fabric API**.
+Each one needs **Fabric Loader 0.19.5+** and the matching **Fabric API**.
 
-Zum Ausprobieren: `./gradlew :26.3:runClient` (bzw. eine andere Version).
-Automatischer Screenshot-Test im echten Client: `./gradlew :26.3:runClientGameTest`. Die Bilder landen in `versions/26.3/build/run/clientGameTest/screenshots/`.
+To try it: `./gradlew :26.3:runClient` (or another version).
+Screenshot test in a real client: `./gradlew :26.3:runClientGameTest`. The images go to `versions/26.3/build/run/clientGameTest/screenshots/`.
 
-## Projektaufbau
+## Releasing on Modrinth
 
-```
-src/main/java             gemeinsamer Code für alle Versionen
-  journal/                Datenmodell, Erkennung (EventTracker), Speichern, Navigation
-  hud/                    Kompass + Benachrichtigungen (Vanilla & Modern)
-  ui/vanilla/             Vanilla-UI
-  ui/modern/              Modern-UI + eigene Komponenten in widget/
-src/compat/<facette>/     versionsabhängige Brücken (siehe unten)
-versions/<mc>/            pro Minecraft-Version nur gradle.properties
-src/gametest/             Screenshot-Test
+`modrinth.bat` builds every version and uploads the jars to Modrinth. It takes the changelog from the `## Chronicle <version>` section in `CHANGELOG.md`. Put your token in `%USERPROFILE%\.gradle\gradle.properties` as `modrinth_token=...` (never in the project), then:
+
+```bash
+modrinth.bat --dry-run
 ```
 
-Mojang hat zwischen 1.21.8 und 26.3 einiges umgebaut. Die Unterschiede stecken in kleinen Klassen unter `src/compat`, alles andere ist für alle Versionen derselbe Code:
+Run it without `--dry-run` to actually upload. `--type=beta`, `--skip-build` and `--yes` are also available.
 
-| Ordner | Versionen | Warum |
+## Project layout
+
+```
+src/main/java             shared code for all versions
+  journal/                data model, detection (EventTracker), saving, navigation
+  hud/                    compass + notifications (Vanilla & Modern)
+  ui/vanilla/             Vanilla UI
+  ui/modern/              Modern UI + custom components in widget/
+src/compat/<facet>/       version-specific bridges (see below)
+versions/<mc>/            only gradle.properties per Minecraft version
+src/gametest/             screenshot test
+```
+
+Mojang changed quite a bit between 1.21.8 and 26.3. The differences live in small classes under `src/compat`, everything else is the same code for every version:
+
+| Folder | Versions | Why |
 |---|---|---|
-| `gg` / `gge` | bis 1.21.11 / ab 26.1 | `GuiGraphics` → `GuiGraphicsExtractor`, `render` → `extractRenderState` |
-| `input_legacy` / `input_events` | 1.21.8 / ab 1.21.9 | Maus/Tastatur als Event-Records |
-| `list_content` | 1.21.9 – 1.21.11 | neue Listen-Zeilen-API |
-| `v1_21_8` … `v26_2` | je Version | `ResourceLocation` → `Identifier`, Keybind-Kategorien, `KeyBindingHelper` → `KeyMappingHelper`, Screen-Verwaltung über `gui` (ab 26.2) |
+| `gg` / `gge` | up to 1.21.11 / 26.1+ | `GuiGraphics` → `GuiGraphicsExtractor`, `render` → `extractRenderState` |
+| `input_legacy` / `input_events` | 1.21.8 / 1.21.9+ | mouse/keyboard as event records |
+| `list_content` | 1.21.9 - 1.21.11 | new list row API |
+| `v1_21_8` ... `v26_2` | per version | `ResourceLocation` → `Identifier`, keybind categories, `KeyBindingHelper` → `KeyMappingHelper`, screen handling via `gui` (26.2+) |
 
-Tastencodes kommen immer aus `InputConstants`. Ab 26.3 nutzt Minecraft SDL3 statt GLFW, die Werte sind dort andere.
+Key codes always come from `InputConstants`. Since 26.3 Minecraft uses SDL3 instead of GLFW and the values are different.
 
-Eine neue Minecraft-Version kommt so dazu: Ordner `versions/<mc>/gradle.properties` anlegen, in `settings.gradle` eintragen, passende `compat`-Ordner wählen.
+To add a new Minecraft version: create `versions/<mc>/gradle.properties`, add it to `settings.gradle` and pick the matching `compat` folders.

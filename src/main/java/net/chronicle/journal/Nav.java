@@ -4,8 +4,8 @@ import net.chronicle.compat.Platform;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.util.Mth;
 
-// relativeAngle: 0 = geradeaus, positiv = rechts
-// converted = oberwelt/nether koords wurden mit 8 umgerechnet
+// relativeAngle: 0 = straight ahead, positive = right
+// converted = overworld/nether coords were converted with factor 8
 public record Nav(double distance, float relativeAngle, int dy, boolean converted) {
 	private static final String[] ARROWS = {"↑", "↗", "→", "↘", "↓", "↙", "←", "↖"};
 

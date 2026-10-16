@@ -7,7 +7,7 @@ public final class JournalEntry {
 	public String id = UUID.randomUUID().toString();
 	public Category category = Category.NOTE;
 	public String type = "note";
-	// bei notizen ist subject der titel, sonst das argument fuer chronicle.entry.<type>
+	// for notes subject is the title, otherwise it's the argument for chronicle.entry.<type>
 	public String subject = "";
 	public boolean subjectKey;
 	public String subjectFallback = "";

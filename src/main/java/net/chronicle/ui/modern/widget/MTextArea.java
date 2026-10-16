@@ -11,7 +11,7 @@ public class MTextArea extends MTextBase {
 	private static final int PAD = 6;
 	private static final int LINE = 11;
 
-	private final List<int[]> lines = new ArrayList<>(); // {start, end} im text, end exklusiv
+	private final List<int[]> lines = new ArrayList<>(); // {start, end} in the text, end exclusive
 	private int wrappedFor = -1;
 	private boolean dirty = true;
 	private final Anim scroll = new Anim(0, 20);

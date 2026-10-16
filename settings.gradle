@@ -11,8 +11,8 @@ pluginManagement {
 
 rootProject.name = 'chronicle'
 
-// Jede Minecraft-Version ist ein eigenes Subprojekt unter versions/<mc>.
-// Die Ordnernamen hier müssen zu versions/* passen.
+// every Minecraft version is its own subproject under versions/<mc>
+// the names here have to match the folders in versions/*
 def mcVersions = ['1.21.8', '1.21.10', '1.21.11', '26.1.2', '26.2', '26.3']
 
 mcVersions.each { mc ->

@@ -2,11 +2,11 @@
 
 ## Chronicle 1.0.0
 
-Erste Version.
+First release.
 
-- Protokolliert automatisch neue Biome, Dimensionen, Tode, seltene Funde und Meilensteine
-- Eigene Notizen an der aktuellen Position
-- Kompass im HUD zu jedem Eintrag, rechnet zwischen Oberwelt und Nether um
-- Anpinnen, Suchen, Filtern und Koordinaten kopieren
-- Zwei Oberflächen: Vanilla und Modern
-- Läuft auf Minecraft 1.21.8 bis 26.3
+- Automatically logs new biomes, dimensions, deaths, rare finds and milestones
+- Your own notes at your current position
+- HUD compass to any entry, converts between Overworld and Nether
+- Pin, search, filter and copy coordinates
+- Two UIs: Vanilla and Modern
+- Runs on Minecraft 1.21.8 to 26.3

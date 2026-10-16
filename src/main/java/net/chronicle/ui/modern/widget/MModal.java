@@ -35,10 +35,10 @@ public abstract class MModal {
 		build();
 	}
 
-	// x/y/w/h sind hier schon gesetzt
+	// x/y/w/h are already set here
 	protected abstract void build();
 
-	// enter
+	// enter key
 	protected void submit() {
 	}
 
@@ -91,7 +91,7 @@ public abstract class MModal {
 
 	public boolean mouseDown(double mx, double my, int button) {
 		my -= offsetY;
-		// daneben geklickt -> zu
+		// clicked outside -> close
 		if (mx < x || mx >= x + w || my < y || my >= y + h) {
 			close();
 			return true;

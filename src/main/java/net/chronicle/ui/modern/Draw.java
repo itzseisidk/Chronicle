@@ -14,8 +14,8 @@ public final class Draw {
 		return Math.max(1, Minecraft.getInstance().getWindow().getGuiScale());
 	}
 
-	// zeichnet in echten pixeln statt gui pixeln, sonst sind die ecken bei gui scale 3-4 voll treppig.
-	// die kante bekommt pro zeile einen halbtransparenten pixel als billiges antialiasing
+	// draws in real pixels instead of gui pixels, otherwise the corners look super jaggy at gui scale 3-4.
+	// the edge gets one half transparent pixel per row as cheap antialiasing
 	public static void round(Gfx g, float x, float y, float w, float h, float radius, int color) {
 		if (w <= 0 || h <= 0 || (color >>> 24) == 0) return;
 		float s = guiScale();
@@ -60,7 +60,7 @@ public final class Draw {
 		round(g, x + 1, y + 1, w - 2, h - 2, Math.max(0, radius - 1), fill);
 	}
 
-	// fake blur: ein paar transparente lagen uebereinander
+	// fake blur: a few transparent layers on top of each other
 	public static void shadow(Gfx g, float x, float y, float w, float h, float radius, int size, float strength) {
 		for (int i = size; i >= 1; i--) {
 			float t = 1f - (float) i / (size + 1);
@@ -73,7 +73,7 @@ public final class Draw {
 		round(g, cx - radius, cy - radius, radius * 2, radius * 2, radius, color);
 	}
 
-	// zeigt bei 0 nach oben
+	// points up at 0
 	public static void arrow(Gfx g, float cx, float cy, float size, float radians, int color) {
 		float s = guiScale();
 		g.push();
@@ -83,7 +83,7 @@ public final class Draw {
 		int len = Math.round(size * s);
 		int half = len / 2;
 		int head = Math.round(len * 0.55f);
-		// spitze, wird nach oben schmaler
+		// tip, gets narrower towards the top
 		for (int row = 0; row < head; row++) {
 			int width = Math.max(1, Math.round((float) (row + 1) / head * len * 0.5f));
 			g.fill(-width, -half + row, width, -half + row + 1, color);

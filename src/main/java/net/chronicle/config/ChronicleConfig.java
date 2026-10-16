@@ -67,7 +67,7 @@ public final class ChronicleConfig {
 				instance = loaded;
 			}
 		} catch (Exception e) {
-			ChronicleClient.LOG.warn("Konnte chronicle.json nicht lesen, nutze Standardwerte", e);
+			ChronicleClient.LOG.warn("Could not read chronicle.json, using defaults", e);
 		}
 	}
 
@@ -78,7 +78,7 @@ public final class ChronicleConfig {
 				GSON.toJson(instance, writer);
 			}
 		} catch (IOException e) {
-			ChronicleClient.LOG.warn("Konnte chronicle.json nicht speichern", e);
+			ChronicleClient.LOG.warn("Could not save chronicle.json", e);
 		}
 	}
 }

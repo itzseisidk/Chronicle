@@ -24,7 +24,7 @@ public final class JournalManager {
 	private static Path file;
 	private static boolean dirty;
 	private static long lastChange;
-	private static int revision; // offene screens vergleichen das und laden neu
+	private static int revision; // open screens compare this and reload
 
 	private JournalManager() {
 	}
@@ -99,7 +99,7 @@ public final class JournalManager {
 			try (Reader reader = Files.newBufferedReader(file, StandardCharsets.UTF_8)) {
 				loaded = GSON.fromJson(reader, Journal.class);
 			} catch (Exception e) {
-				ChronicleClient.LOG.error("Tagebuch {} ist beschädigt, lege Sicherung an", file, e);
+				ChronicleClient.LOG.error("Journal {} is corrupted, making a backup", file, e);
 				try {
 					Files.copy(file, file.resolveSibling(file.getFileName() + ".broken"), StandardCopyOption.REPLACE_EXISTING);
 				} catch (Exception ignored) {
@@ -112,7 +112,7 @@ public final class JournalManager {
 		journal = loaded;
 		dirty = false;
 		revision++;
-		ChronicleClient.LOG.info("Chronik geladen: {} ({} Einträge)", file.getFileName(), journal.entries.size());
+		ChronicleClient.LOG.info("Journal loaded: {} ({} entries)", file.getFileName(), journal.entries.size());
 	}
 
 	public static void save() {
@@ -126,11 +126,11 @@ public final class JournalManager {
 			Files.move(tmp, file, StandardCopyOption.REPLACE_EXISTING);
 			dirty = false;
 		} catch (Exception e) {
-			ChronicleClient.LOG.error("Konnte Tagebuch nicht speichern", e);
+			ChronicleClient.LOG.error("Could not save journal", e);
 		}
 	}
 
-	// {dateiname, anzeigename}
+	// {file name, display name}
 	private static String[] worldId(Minecraft mc) {
 		IntegratedServer server = mc.getSingleplayerServer();
 		if (server != null) {

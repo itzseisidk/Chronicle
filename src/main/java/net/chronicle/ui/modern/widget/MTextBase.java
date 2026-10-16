@@ -216,7 +216,7 @@ public abstract class MTextBase extends MWidget {
 				}
 			}
 		}
-		// text kommt ueber charTyped, aber die taste trotzdem schlucken sonst geht bei E das inventar auf
+		// text comes in through charTyped, but still eat the key or E opens the inventory
 		return key != InputConstants.KEY_ESCAPE && key != InputConstants.KEY_TAB;
 	}
 

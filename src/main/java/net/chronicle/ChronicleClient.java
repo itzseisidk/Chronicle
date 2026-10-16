@@ -17,7 +17,7 @@ import net.minecraft.client.Minecraft;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-// reiner client mod, der server bekommt davon nix mit
+// client only, the server never knows about any of this
 public final class ChronicleClient implements ClientModInitializer {
 	public static final String MOD_ID = "chronicle";
 	public static final Logger LOG = LoggerFactory.getLogger("Chronicle");

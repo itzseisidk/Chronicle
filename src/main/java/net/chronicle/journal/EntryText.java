@@ -71,7 +71,7 @@ public final class EntryText {
 		try {
 			return DateTimeFormatter.ofPattern(Component.translatable("chronicle.date_format").getString(), Locale.ROOT).format(when);
 		} catch (IllegalArgumentException e) {
-			// kaputtes format in einer uebersetzung
+			// broken format in a translation
 			return DateTimeFormatter.ISO_LOCAL_DATE.format(when);
 		}
 	}
@@ -91,7 +91,7 @@ public final class EntryText {
 		return player == null ? null : Nav.of(e, player);
 	}
 
-	// "vor 5 Min. · Oberwelt · ↗ 120 m"
+	// "5 min ago · Overworld · ↗ 120 m"
 	public static Component subtitle(JournalEntry e) {
 		MutableComponent c = Component.empty().append(relativeTime(e.time)).append(" · ").append(dimension(e.dimension));
 		Nav nav = nav(e);

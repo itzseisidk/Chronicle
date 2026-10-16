@@ -54,7 +54,7 @@ public final class ModernHud {
 		COMPASS.snap(0);
 	}
 
-	// toasts() laeuft jeden frame und misst die zeit, compass() nutzt den wert mit
+	// toasts() runs every frame and measures the time, compass() reuses it
 	public static void toasts(Gfx g) {
 		float dt = frameDelta = CLOCK.tick();
 		var font = Minecraft.getInstance().font;
@@ -69,7 +69,7 @@ public final class ModernHud {
 				it.remove();
 				continue;
 			}
-			if (t.slot.get() < 0) t.slot.snap(index); // neue karte nicht reinrutschen lassen
+			if (t.slot.get() < 0) t.slot.snap(index); // new cards shouldn't slide in from slot -1
 			t.slot.set(index++);
 			float slot = t.slot.update(dt);
 
@@ -96,7 +96,7 @@ public final class ModernHud {
 	public static void compass(Gfx g, JournalEntry target, Nav nav) {
 		var font = Minecraft.getInstance().font;
 		COMPASS.set(1);
-		float o = COMPASS.update(frameDelta == 0 ? 0.016f : frameDelta); // erster frame: noch keine zeit gemessen
+		float o = COMPASS.update(frameDelta == 0 ? 0.016f : frameDelta); // first frame: nothing measured yet
 
 		String title = Draw.ellipsize(font, target.title().getString(), 130);
 		String info;
